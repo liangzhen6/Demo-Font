@@ -122,7 +122,7 @@
                 UIButton * btn = [self.view viewWithTag:tag + 1000];
                 [btn setTitle:@"下载完成" forState:UIControlStateNormal];
                 //刷新UI
-                [self.myText setFont:[self customFontWithPath:mylocation size:17]];
+                [self.myText setFont:[self customFontWithPath:location size:17]];
             });
 
 
@@ -133,7 +133,13 @@
 
 
 }
-//设置字体
+
+/**
+ 设置字体
+ @param path 这里的路径是你存储字体文件的路径
+ @param size 字体的大小
+ @return 返回字体
+ */
 - (UIFont *)customFontWithPath:(NSURL *)path size:(CGFloat)size {
     
     CGDataProviderRef fontDataProvider = CGDataProviderCreateWithURL((__bridge CFURLRef)path);
