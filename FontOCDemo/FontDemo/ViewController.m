@@ -106,11 +106,10 @@
             NSURL * mylocation = [NSURL fileURLWithPath:path1];
             NSFileManager *fileManager = [NSFileManager defaultManager];
             NSError * error;
-           BOOL isok111 =  [fileManager copyItemAtURL:location toURL:mylocation error:&error];
+
+            BOOL isok111 =  [fileManager moveItemAtURL:location toURL:mylocation error:&error];
             if (!error && isok111) {
-                if ([[NSFileManager defaultManager]fileExistsAtPath:mylocation.path]) {
-                    NSLog(@"有东西呀");
-                }
+                
                 NSMutableDictionary * dataBase = [Store readWithPathString:@"dataBase"];
                 NSMutableDictionary * dic = [dataBase objectForKey:name];
                 [dic setObject:lastPath forKey:@"pathLocation"];
@@ -122,6 +121,8 @@
             dispatch_async(dispatch_get_main_queue(), ^{
                 UIButton * btn = [self.view viewWithTag:tag + 1000];
                 [btn setTitle:@"下载完成" forState:UIControlStateNormal];
+                //刷新UI
+                [self.myText setFont:[self customFontWithPath:mylocation size:17]];
             });
 
 
@@ -132,7 +133,8 @@
 
 
 }
--(UIFont*)customFontWithPath:(NSURL *)path size:(CGFloat)size {
+//设置字体
+- (UIFont *)customFontWithPath:(NSURL *)path size:(CGFloat)size {
     
     CGDataProviderRef fontDataProvider = CGDataProviderCreateWithURL((__bridge CFURLRef)path);
     CGFontRef fontRef = CGFontCreateWithDataProvider(fontDataProvider);
@@ -142,7 +144,6 @@
     UIFont *font = [UIFont fontWithName:fontName size:size];
     CGFontRelease(fontRef);
     return font;
-
 }
 
 - (IBAction)btnAction:(UIButton *)sender {
@@ -162,9 +163,7 @@
             //还未下载
                 [sender setTitle:@"下载中.." forState:UIControlStateNormal];
                 [self downloadfountwithName:nameArr[tag]];
-            
             }
-            
         }
 
     }
