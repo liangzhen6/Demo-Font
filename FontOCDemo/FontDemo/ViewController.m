@@ -122,7 +122,7 @@
                 UIButton * btn = [self.view viewWithTag:tag + 1000];
                 [btn setTitle:@"下载完成" forState:UIControlStateNormal];
                 //刷新UI
-                [self.myText setFont:[self customFontWithPath:location size:17]];
+                [self.myText setFont:[self customFontWithPath:mylocation size:17]];
             });
 
 
